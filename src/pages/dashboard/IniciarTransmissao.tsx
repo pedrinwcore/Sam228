@@ -456,12 +456,6 @@ const IniciarTransmissao: React.FC = () => {
         <h1 className="text-3xl font-bold text-gray-900">Gerenciamento de Lives</h1>
       </div>
 
-      {/* Controle de Streaming */}
-      <StreamingControl
-        login={userLogin}
-        onStatusChange={loadLives}
-        showAdminControls={user?.tipo === 'admin' || user?.tipo === 'revenda'}
-      />
 
       {/* Aviso importante */}
       <div className="bg-yellow-50 border border-yellow-200 rounded-lg p-4">
@@ -613,45 +607,23 @@ const IniciarTransmissao: React.FC = () => {
         <h2 className="text-xl font-semibold text-gray-800 mb-6">Cadastrar Live</h2>
 
         <form onSubmit={handleSubmit} className="space-y-6">
-          <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
-            <div>
-              <label htmlFor="tipo" className="block text-sm font-medium text-gray-700 mb-2">
-                Plataforma *
-              </label>
-              <select
-                id="tipo"
-                value={formData.tipo}
-                onChange={(e) => handlePlatformChange(e.target.value)}
-                className="w-full px-4 py-2 border border-gray-300 rounded-md focus:ring-primary-500 focus:border-primary-500"
-                disabled={loading}
-              >
-                {platforms.map((platform) => (
-                  <option key={platform.id} value={platform.id}>
-                    {platform.nome}
-                  </option>
-                ))}
-              </select>
-            </div>
-
-            <div>
-              <label htmlFor="servidor_stm" className="block text-sm font-medium text-gray-700 mb-2">
-                Source (Fonte) *
-              </label>
-              <select
-                id="servidor_stm"
-                value={formData.servidor_stm}
-                onChange={(e) => setFormData(prev => ({ ...prev, servidor_stm: e.target.value }))}
-                className="w-full px-4 py-2 border border-gray-300 rounded-md focus:ring-primary-500 focus:border-primary-500"
-                disabled={loading}
-              >
-                {sourceUrls && (
-                  <>
-                    <option value={sourceUrls.http_m3u8}>HTTP/M3U8</option>
-                    <option value={sourceUrls.rtmp}>RTMP</option>
-                  </>
-                )}
-              </select>
-            </div>
+          <div>
+            <label htmlFor="tipo" className="block text-sm font-medium text-gray-700 mb-2">
+              Plataforma *
+            </label>
+            <select
+              id="tipo"
+              value={formData.tipo}
+              onChange={(e) => handlePlatformChange(e.target.value)}
+              className="w-full px-4 py-2 border border-gray-300 rounded-md focus:ring-primary-500 focus:border-primary-500"
+              disabled={loading}
+            >
+              {platforms.map((platform) => (
+                <option key={platform.id} value={platform.id}>
+                  {platform.nome}
+                </option>
+              ))}
+            </select>
           </div>
 
           <div className="grid grid-cols-1 md:grid-cols-2 gap-6">

@@ -1151,14 +1151,6 @@ const Playlists: React.FC = () => {
               </button>
             </div>
 
-            {/* Título da Transmissão */}
-            <div className="absolute top-4 left-4 z-20 bg-black bg-opacity-60 text-white px-4 py-2 rounded-lg">
-              <h3 className="font-medium">📺 Transmissão: {selectedPlaylist?.nome}</h3>
-              <p className="text-xs opacity-80">
-                {playlistVideos.length} vídeos • {formatDuration(getTotalDuration())} •
-                URL: https://stmv1.udicast.com/${userLogin}/${userLogin}/playlist.m3u8
-              </p>
-            </div>
 
             {/* Player */}
             <div className="w-full h-full p-4 pt-16">
