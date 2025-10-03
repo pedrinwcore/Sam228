@@ -112,7 +112,7 @@ const ClapprStreamingPlayer: React.FC<ClapprStreamingPlayerProps> = ({
         // Configurações do Clappr
         const playerConfig: any = {
           source: src,
-          parentId: containerRef.current,
+          parent: containerRef.current,
           width: '100%',
           height: '100%',
           autoPlay: autoplay,
