@@ -102,7 +102,7 @@ const ClapprStreamingPlayer: React.FC<ClapprStreamingPlayerProps> = ({
     const initializeClappr = () => {
       if (!containerRef.current || !window.Clappr || !src) return;
 
-      setLoading(true);
+      setLoading(false);
       setError(null);
       setConnectionStatus('connecting');
 
@@ -148,12 +148,13 @@ const ClapprStreamingPlayer: React.FC<ClapprStreamingPlayerProps> = ({
           setLoading(false);
           setConnectionStatus('connected');
           setRetryCount(0);
-          
+
           if (onReady) onReady();
         });
 
         player.on(window.Clappr.Events.PLAYER_PLAY, () => {
           console.log('▶️ Clappr streaming play');
+          setLoading(false);
           setConnectionStatus('connected');
           if (onPlay) onPlay();
         });
@@ -161,6 +162,12 @@ const ClapprStreamingPlayer: React.FC<ClapprStreamingPlayerProps> = ({
         player.on(window.Clappr.Events.PLAYER_PAUSE, () => {
           console.log('⏸️ Clappr streaming pause');
           if (onPause) onPause();
+        });
+
+        player.on(window.Clappr.Events.PLAYER_PLAYING, () => {
+          console.log('🎬 Clappr streaming playing');
+          setLoading(false);
+          setConnectionStatus('connected');
         });
 
         player.on(window.Clappr.Events.PLAYER_ERROR, (error: any) => {
@@ -192,13 +199,25 @@ const ClapprStreamingPlayer: React.FC<ClapprStreamingPlayerProps> = ({
         });
 
         player.on(window.Clappr.Events.PLAYER_LOADSTART, () => {
-          setLoading(true);
+          console.log('⏳ Clappr load start');
           setConnectionStatus('connecting');
         });
 
         player.on(window.Clappr.Events.PLAYER_CANPLAY, () => {
+          console.log('✅ Clappr can play');
           setLoading(false);
           setConnectionStatus('connected');
+        });
+
+        player.on(window.Clappr.Events.PLAYER_LOADEDDATA, () => {
+          console.log('📦 Clappr loaded data');
+          setLoading(false);
+          setConnectionStatus('connected');
+        });
+
+        player.on(window.Clappr.Events.PLAYER_LOADEDMETADATA, () => {
+          console.log('📋 Clappr loaded metadata');
+          setLoading(false);
         });
 
       } catch (error) {
