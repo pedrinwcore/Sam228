@@ -274,36 +274,6 @@ const ClapprStreamingPlayer: React.FC<ClapprStreamingPlayerProps> = ({
       {/* Container do Clappr */}
       <div ref={containerRef} className="w-full h-full" />
 
-      {/* Indicador de transmissão ao vivo */}
-      {isLive && (
-        <div className="absolute top-4 left-4 z-20">
-          <div className="bg-red-600 text-white px-3 py-1 rounded-full flex items-center space-x-2 text-sm font-medium">
-            <div className="w-2 h-2 bg-white rounded-full animate-pulse"></div>
-            <span>AO VIVO</span>
-          </div>
-        </div>
-      )}
-
-      {/* Status da conexão */}
-      <div className="absolute top-4 right-4 z-20">
-        <div className="bg-black bg-opacity-60 text-white px-2 py-1 rounded-full flex items-center space-x-1">
-          {getConnectionIcon()}
-          <span className="text-xs">{connectionStatus}</span>
-        </div>
-      </div>
-
-      {/* Botão de estatísticas */}
-      {streamStats && (
-        <div className="absolute top-4 right-16 z-20">
-          <button
-            onClick={() => setShowStats(!showStats)}
-            className="bg-black bg-opacity-60 text-white p-2 rounded-full hover:bg-opacity-80 transition-opacity"
-            title="Estatísticas"
-          >
-            <Activity className="h-4 w-4" />
-          </button>
-        </div>
-      )}
 
       {/* Loading indicator */}
       {loading && (
@@ -357,44 +327,6 @@ const ClapprStreamingPlayer: React.FC<ClapprStreamingPlayerProps> = ({
         </div>
       )}
 
-      {/* Estatísticas do stream */}
-      {streamStats && showStats && (
-        <div className="absolute bottom-4 left-4 z-20 bg-black bg-opacity-80 text-white p-3 rounded-lg text-sm">
-          <div className="space-y-1">
-            <div className="flex items-center space-x-2">
-              <Eye className="h-3 w-3" />
-              <span>{streamStats.viewers || 0} espectadores</span>
-            </div>
-            <div className="flex items-center space-x-2">
-              <Activity className="h-3 w-3" />
-              <span>{streamStats.bitrate || 0} kbps</span>
-            </div>
-            <div className="flex items-center space-x-2">
-              <Clock className="h-3 w-3" />
-              <span>{streamStats.uptime || '00:00:00'}</span>
-            </div>
-            {streamStats.quality && (
-              <div className="flex items-center space-x-2">
-                <span>{streamStats.quality}</span>
-              </div>
-            )}
-          </div>
-        </div>
-      )}
-
-      {/* Título do stream */}
-      {title && (
-        <div className="absolute bottom-0 left-0 right-0 bg-gradient-to-t from-black/80 to-transparent p-4 pointer-events-none">
-          <h3 className="text-white text-lg font-semibold truncate">{title}</h3>
-          {streamStats && (
-            <div className="text-white text-sm opacity-80 mt-1">
-              {streamStats.quality && <span>{streamStats.quality}</span>}
-              {streamStats.bitrate && <span> • {streamStats.bitrate} kbps</span>}
-              {isLive && <span> • AO VIVO</span>}
-            </div>
-          )}
-        </div>
-      )}
     </div>
   );
 };

@@ -190,10 +190,19 @@ class YouTubeDownloader {
             const folderData = folderRows[0][0];
             const folderName = folderData.identificacao;
             const serverId = folderData.codigo_servidor || 1;
-            const availableSpace = folderData.espaco - folderData.espaco_usado;
+            const totalSpace = parseFloat(folderData.espaco) || 0;
+            const usedSpace = parseFloat(folderData.espaco_usado) || 0;
+            const availableSpace = totalSpace - usedSpace;
+
+            console.log(`📊 Espaço - Total: ${totalSpace}MB, Usado: ${usedSpace}MB, Disponível: ${availableSpace}MB`);
+            console.log(`📦 Tamanho estimado do vídeo: ${estimatedSizeMB}MB`);
+
+            if (availableSpace < 100) {
+                throw new Error(`Espaço insuficiente. Disponível: ${Math.round(availableSpace)}MB, Necessário: ${estimatedSizeMB}MB.`);
+            }
 
             if (estimatedSizeMB > availableSpace) {
-                throw new Error(`Arquivo muito grande (${estimatedSizeMB}MB). Espaço disponível: ${availableSpace}MB.`);
+                throw new Error(`Arquivo muito grande (${estimatedSizeMB}MB). Espaço disponível: ${Math.round(availableSpace)}MB.`);
             }
 
             const userLogin = await this.getUserLogin(userId);
